@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DermaCare - Result</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family:'Segoe UI',sans-serif;
+margin:0;
+background:linear-gradient(135deg,#4e73df,#1cc88a);
+padding:30px 15px;
+}
+
+.container{
+width:95%;
+max-width:950px;
+margin:auto;
+background:rgba(255,255,255,0.95);
+border-radius:20px;
+padding:35px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+.title{
+font-size:30px;
+font-weight:700;
+margin-bottom:25px;
+text-align:center;
+color:#2a2d3a;
+}
+
+.box{
+padding:20px;
+border-radius:15px;
+background:#f8f9fc;
+margin:18px 0;
+transition:0.3s ease;
+}
+
+.box:hover{
+transform:translateY(-4px);
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.box h3{
+margin-bottom:10px;
+color:#224abe;
+}
+
+.box p{
+color:#555;
+}
+
+.dosha-highlight{
+background:linear-gradient(135deg,#1cc88a,#17a673);
+color:white;
+padding:12px;
+border-radius:12px;
+font-size:18px;
+font-weight:700;
+text-align:center;
+margin-bottom:10px;
+}
+
+ul{
+margin:10px 0;
+padding-left:20px;
+}
+
+li{
+margin:4px 0;
+}
+
+/* CHATBOT */
+
+.chatbox{
+margin-top:30px;
+}
+
+.chat-header{
+background:linear-gradient(135deg,#4e73df,#224abe);
+color:white;
+padding:14px;
+border-radius:15px 15px 0 0;
+font-weight:700;
+}
+
+.chat-body{
+border:1px solid #d1d5db;
+border-top:none;
+padding:15px;
+height:260px;
+overflow-y:auto;
+background:#f9fafb;
+}
+
+.message{
+margin:8px 0;
+padding:8px 12px;
+border-radius:10px;
+max-width:75%;
+}
+
+.user{
+background:#4e73df;
+color:white;
+margin-left:auto;
+text-align:right;
+}
+
+.bot{
+background:#e2e8f0;
+color:#333;
+}
+
+.chat-input{
+display:flex;
+gap:10px;
+margin-top:12px;
+}
+
+.chat-input input{
+flex:1;
+padding:10px;
+border-radius:12px;
+border:1px solid #d1d5db;
+outline:none;
+}
+
+.chat-input button{
+padding:10px 18px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#4e73df,#224abe);
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.chat-input button:hover{
+transform:scale(1.05);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title">🧠 Your AI Skin Results</div>
+
+{% if category == "acne" %}
+<div class="box">
+<h3>Acne Severity: {{ acne }}</h3>
+<p>{{ acne_explain }}</p>
+<p><b>Extra Care:</b> Maintain face hygiene, reduce sugar intake, manage stress.</p>
+</div>
+{% endif %}
+
+{% if category == "pigmentation" %}
+<div class="box">
+<h3>Pigmentation Level: {{ pigmentation }}</h3>
+<p>{{ pigmentation_explain }}</p>
+<p><b>Extra Care:</b> Use sunscreen daily, vitamin-C rich diet, avoid sun exposure.</p>
+</div>
+{% endif %}
+
+{% if category == "melanoma" %}
+<div class="box">
+<h3>Melanoma Risk: {{ melanoma }}</h3>
+<p>{{ melanoma_explain }}</p>
+
+{% if melanoma == "High Risk" %}
+<p style="color:red;font-weight:bold;">
+⚠ Immediate dermatologist consultation recommended.
+</p>
+{% endif %}
+
+</div>
+{% endif %}
+
+
+<!-- DOSHA RESULT -->
+
+<div class="box">
+
+<h3>Your Dosha</h3>
+
+{% if dosha %}
+<div class="dosha-highlight">
+{{ dosha }}
+</div>
+
+<p style="text-align:center;">Follow diet & routine based on your dosha.</p>
+
+{% if diet %}
+
+<h4>Recommended Foods</h4>
+<ul>
+{% for food in diet.recommended %}
+<li>{{ food }}</li>
+{% endfor %}
+</ul>
+
+<h4>Foods to Avoid</h4>
+<ul>
+{% for food in diet.avoid %}
+<li>{{ food }}</li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+{% else %}
+<div class="dosha-highlight">
+Dosha Not Calculated
+</div>
+{% endif %}
+
+</div>
+
+
+<!-- CHATBOT -->
+
+<div class="box chatbox">
+
+<div class="chat-header">💬 DermaCare AI Assistant</div>
+
+<div class="chat-body" id="chatBody">
+<div class="message bot">
+Hello 👋 Ask me about acne, pigmentation, or melanoma.
+</div>
+</div>
+
+<div class="chat-input">
+<input type="text" id="userMsg" placeholder="Type your question...">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function sendMessage(){
+
+const msg=document.getElementById("userMsg").value.trim();
+if(msg==="") return;
+
+const chatBody=document.getElementById("chatBody");
+
+const userDiv=document.createElement("div");
+userDiv.className="message user";
+userDiv.innerText=msg;
+chatBody.appendChild(userDiv);
+
+document.getElementById("userMsg").value="";
+
+fetch("/chat",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded"
+},
+body:"message="+encodeURIComponent(msg)
+})
+
+.then(response=>response.json())
+
+.then(data=>{
+
+const botDiv=document.createElement("div");
+botDiv.className="message bot";
+botDiv.innerText=data.reply;
+
+chatBody.appendChild(botDiv);
+
+chatBody.scrollTop=chatBody.scrollHeight;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

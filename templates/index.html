@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DermaCare Chatbot</title>
+</head>
+<body>
+
+<h1>DermaCare Chatbot</h1>
+
+<!-- Chat section -->
+<div id="chatbox"></div>
+<input id="user_input" type="text" placeholder="Type your message..." />
+<button onclick="sendMessage()">Send</button>
+
+<hr>
+
+<!-- Upload section -->
+<h3>Upload Image for Prediction</h3>
+<select id="model_type">
+    <option value="acne">Acne</option>
+    <option value="pigmentation">Pigmentation</option>
+    <option value="melanoma">Melanoma</option>
+</select>
+
+<input type="file" id="image_file" />
+<button onclick="uploadImage()">Upload</button>
+
+<div id="prediction"></div>
+
+<script>
+function sendMessage() {
+    let msg = document.getElementById("user_input").value;
+
+    fetch("/chat", {
+        method: "POST",
+        body: new URLSearchParams({ message: msg })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("chatbox").innerHTML += "<p><b>You:</b> " + msg + "</p>";
+        document.getElementById("chatbox").innerHTML += "<p><b>Bot:</b> " + data.reply + "</p>";
+    });
+}
+
+function uploadImage() {
+    let file = document.getElementById("image_file").files[0];
+    let type = document.getElementById("model_type").value;
+
+    let formData = new FormData();
+    formData.append("image", file);
+    formData.append("type", type);
+
+    fetch("/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("prediction").innerHTML = "<h3>Prediction: " + data.result + "</h3>";
+    });
+}
+</script>
+
+</body>
+</html>

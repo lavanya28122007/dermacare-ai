@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DermaCare - Dosha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            padding: 30px 15px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2a2d3a;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f8f9fc;
+            transition: 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .question-title {
+            font-weight: 700;
+            color: #2a2d3a;
+            margin-bottom: 12px;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .option:hover {
+            background: #e3e6f0;
+        }
+
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: white;
+            font-weight: 700;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #224abe, #1a3c9c);
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">🌿 Dosha Questionnaire</div>
+        <div class="subtitle">Answer 10 daily routine questions (MCQ)</div>
+
+        <form method="POST">
+
+            <!-- Question 1 -->
+            <div class="question">
+                <div class="question-title">1. How is your sleep?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q1" value="vatham" required> Light & restless</label>
+                    <label class="option"><input type="radio" name="q1" value="pitham"> Deep & sound</label>
+                    <label class="option"><input type="radio" name="q1" value="kabam"> Heavy & long</label>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <div class="question-title">2. What is your appetite like?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q2" value="vatham" required> Irregular</label>
+                    <label class="option"><input type="radio" name="q2" value="pitham"> Strong</label>
+                    <label class="option"><input type="radio" name="q2" value="kabam"> Slow & steady</label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <div class="question-title">3. How is your body temperature?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q3" value="vatham" required> Cold easily</label>
+                    <label class="option"><input type="radio" name="q3" value="pitham"> Warm</label>
+                    <label class="option"><input type="radio" name="q3" value="kabam"> Cool & steady</label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <div class="question-title">4. How is your energy level?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q4" value="vatham" required> High but quickly tired</label>
+                    <label class="option"><input type="radio" name="q4" value="pitham"> Strong & focused</label>
+                    <label class="option"><input type="radio" name="q4" value="kabam"> Slow & calm</label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question">
+                <div class="question-title">5. How is your skin texture?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q5" value="vatham" required> Dry</label>
+                    <label class="option"><input type="radio" name="q5" value="pitham"> Oily</label>
+                    <label class="option"><input type="radio" name="q5" value="kabam"> Smooth & moist</label>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question">
+                <div class="question-title">6. How is your mood?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q6" value="vatham" required> Anxious</label>
+                    <label class="option"><input type="radio" name="q6" value="pitham"> Angry quickly</label>
+                    <label class="option"><input type="radio" name="q6" value="kabam"> Calm & patient</label>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question">
+                <div class="question-title">7. How is your digestion?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q7" value="vatham" required> Gas & constipation</label>
+                    <label class="option"><input type="radio" name="q7" value="pitham"> Heartburn</label>
+                    <label class="option"><input type="radio" name="q7" value="kabam"> Slow digestion</label>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question">
+                <div class="question-title">8. How is your body weight?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q8" value="vatham" required> Thin</label>
+                    <label class="option"><input type="radio" name="q8" value="pitham"> Medium</label>
+                    <label class="option"><input type="radio" name="q8" value="kabam"> Heavy</label>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question">
+                <div class="question-title">9. How is your hair?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q9" value="vatham" required> Dry & thin</label>
+                    <label class="option"><input type="radio" name="q9" value="pitham"> Oily</label>
+                    <label class="option"><input type="radio" name="q9" value="kabam"> Thick & strong</label>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question">
+                <div class="question-title">10. How is your thirst level?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q10" value="vatham" required> High</label>
+                    <label class="option"><input type="radio" name="q10" value="pitham"> Moderate</label>
+                    <label class="option"><input type="radio" name="q10" value="kabam"> Low</label>
+                </div>
+            </div>
+
+            <button class="btn" type="submit">Submit</button>
+
+        </form>
+    </div>
+</body>
+</html>
